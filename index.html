@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UMKM Jatimulya — Marketplace Lokal</title>
+  <meta name="description" content="UMKM Jatimulya — Belanja produk lokal Lebak. 12 produk, keranjang dinamis, responsive, animasi, parallax." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--green-600:#1f8f58;--green-500:#10b981;--accent:#60a5fa}
+    html,body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:#f8fafc}
+    .hero-bg{background-image:linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('img/logo.PNG'); background-size:cover; background-position:center;}
+    .product-card{transition:transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s; transform-style:preserve-3d}
+    .product-card:hover{transform:translateY(-10px) rotateX(2deg); box-shadow:0 18px 40px rgba(16,24,40,.18)}
+    .img-3d{transform:translateZ(20px)}
+    .btn-primary{background:linear-gradient(90deg,var(--green-600),var(--green-500));}
+    .btn-primary:hover{filter:brightness(.95)}
+    .badge{background:linear-gradient(90deg,#f59e0b,#ef4444); color:white}
+    /* mobile menu */
+    .no-scroll{overflow:hidden}
+    /* small utilities */
+    .fade-up{opacity:0; transform:translateY(12px); transition:all .6s ease-out}
+    .fade-up.show{opacity:1; transform:none}
+    /* cart sidebar */
+    #cart-sidebar{right:0}
+    /* responsive product image */
+    .product-img{height:210px; object-fit:cover}
+    /* subtle glass card */
+    .glass{backdrop-filter:blur(6px); background:rgba(255,255,255,0.6)}
+  </style>
+</head>
+<body class="text-gray-800">
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40">
+    <nav class="bg-white/95 backdrop-blur-sm shadow-sm">
+      <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div>
+            <a href="#home" class="text-lg font-bold">UMKM <span class="text-green-600">Jatimulya</span></a>
+            <div class="text-xs text-gray-500 -mt-1">Produk Lokal — Desa Jatimulya</div>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#home" class="hover:text-green-600">Beranda</a>
+          <a href="#products" class="hover:text-green-600">Produk</a>
+          <a href="#categories" class="hover:text-green-600">Kategori</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="search-toggle" class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm bg-gray-100 hover:bg-gray-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            
+          </button>
+          <button id="cart-btn" class="relative p-2 rounded-full hover:bg-gray-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"></path></svg>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </button>
+          <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-gray-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+      </div>
+      <!-- mobile menu -->
+      <div id="mobile-menu" class="md:hidden hidden border-t">
+        <div class="px-4 py-3 space-y-2">
+          <a href="#home" class="block">Beranda</a>
+          <a href="#products" class="block">Produk</a>
+          <a href="#categories" class="block">Kategori</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero-bg min-h-[56vh] flex items-center">
+    <div class="container mx-auto px-4 py-20 flex flex-col md:flex-row items-center gap-8">
+      <div class="md:w-1/2 text-white">
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight drop-shadow-lg">Belanja Produk Lokal<span class="text-green-300"> Dukung UMKM Jatimulya</span></h1>
+        <p class="mt-4 text-lg opacity-90">KKM 55 JATIMULYA. UNIVERSITAS BINA BANGSA</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#products" class="btn-primary text-white font-semibold px-5 py-3 rounded-full shadow-md inline-flex items-center gap-2">Lihat Produk
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </a>
+        </div>
+      </div>
+      <div class="md:w-1/2">
+        <div class="rounded-xl overflow-hidden shadow-2xl glass">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH BAR -->
+  <section class="px-4 -mt-8">
+    <div class="container mx-auto">
+      <div class="max-w-2xl mx-auto relative">
+        <input id="search" type="search" placeholder="Cari produk" class="w-full py-3 pl-4 pr-12 rounded-full border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-200" />
+        <button id="search-btn" class="absolute right-1 top-1/2 transform -translate-y-1/2 bg-green-600 text-white px-3 py-2 rounded-full">Cari</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+<section id="categories" class="py-16 px-6 bg-gray-50">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-gray-800">
+      Kategori Produk
+    </h2>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl 
+                  transition-all duration-500 transform hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center h-56">
+        <!-- Icon -->
+        <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-green-400 to-green-600 
+                    text-white rounded-full shadow-md group-hover:scale-110 transition-transform duration-500 mb-4 text-2xl">
+          🍰
+        </div>
+        <!-- Title -->
+        <h3 class="text-xl font-semibold text-gray-800">Kuliner</h3>
+        <p class="text-sm text-gray-500">Kue & Makanan</p>
+      </div>
+
+      <!-- Card -->
+      <div class="group relative bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl 
+                  transition-all duration-500 transform hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center h-56">
+        <div class="w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-purple-400 to-purple-600 
+                    text-white rounded-full shadow-md group-hover:scale-110 transition-transform duration-500 mb-4 text-2xl">
+          👗
+        </div>
+        <h3 class="text-xl font-semibold text-gray-800">Fashion</h3>
+        <p class="text-sm text-gray-500">Pakaian & Batik</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="py-10 px-4 bg-gray-50">
+    <div class="container mx-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Produk Unggulan (12)</h2>
+        <div class="text-sm text-gray-500">Klik tombol <span class="font-semibold">Beli</span> untuk menambah ke keranjang</div>
+      </div>
+
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+      <div class="text-center mt-8">
+        <button id="load-more" class="px-6 py-3 rounded-full border border-gray-200 bg-white hover:shadow">Lihat Semua Produk</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+    <div class="p-4 border-b">
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-bold">Keranjang Belanja</h3>
+        <button id="close-cart" class="text-gray-600 hover:text-gray-800">Tutup</button>
+      </div>
+    </div>
+    <div id="cart-items" class="p-4 min-h-[220px]"></div>
+    <div class="p-4 border-t">
+      <div class="flex justify-between mb-2"><span>Subtotal</span><span id="subtotal">Rp 0</span></div>
+      <div class="flex justify-between mb-2"><span>Free Ongkir</span><span id="shipping">Rp 0</span></div>
+      <div class="flex justify-between font-bold text-lg border-t pt-3"><span>Total</span><span id="total">Rp 0</span></div>
+      <button id="checkout" class="mt-4 w-full py-3 rounded-lg btn-primary text-white font-semibold disabled:opacity-50" disabled>Checkout</button>
+    </div>
+  </div>
+  <div id="cart-overlay" class="hidden fixed inset-0 bg-black/40 z-40"></div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t mt-12">
+    <div class="container mx-auto px-4 py-8 text-center text-sm text-gray-600">
+      © 2025 UMKM Jatimulya — Desa Jatimulya, Kecamatan Rangkasbitung, Kabupaten Lebak-Banten
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Product dataset (12 items)
+    const PRODUCTS = [
+      {id:1,name:'Cilor',price:1000,stock:50,cat:'Kuliner',img:'img/cilor.JPG',wa:'6288809970863'},
+      {id:2,name:'Telur Gulung',price:2000,stock:30,cat:'Kuliner',img:'img/telurgulung.JPG',wa:'6288975092359'},
+      {id:3,name:'Bakso Tusuk',price:1000,stock:15,cat:'Kuliner',img:'img/baksotusuk.JPG',wa:'6285714930698'},
+      {id:4,name:'Batik',price:200000,stock:40,cat:'Pakaian',img:'img/batik.PNG',wa:'6281211065211'},
+      {id:5,name:'Seblak',price:12000,stock:70,cat:'Kuliner',img:'img/seblak.JPG',wa:'6283147197372'},
+      {id:6,name:'Gorengan',price:5000,stock:25,cat:'Kuliner',img:'img/gorengan.JPG',wa:'6289668224306'},
+      {id:7,name:'Es Cincau',price:7000,stock:10,cat:'Kuliner',img:'img/escincau.JPG',wa:'6289651807750'},
+      {id:8,name:'Keripik Pisang',price:10000,stock:120,cat:'Kuliner',img:'img/keripikpisang.JPG',wa:'6287765758291'},
+      {id:9,name:'Mie Ayam Bakso',price:15000,stock:90,cat:'Kuliner',img:'img/mieayam.JPG',wa:'6283878362112'},
+      {id:10,name:'Nasi Uduk',price:13000,stock:18,cat:'Kuliner',img:'img/nasiuduk.JPG',wa:'6281311190516'},
+      {id:11,name:'Donat',price:7000,stock:55,cat:'Kuliner',img:'img/donat.JPG',wa:'62895711265588'},
+      {id:12,name:'Kue Pukis',price:2000,stock:40,cat:'Kuliner',img:'img/kuepukis.JPG',wa:'6285719935435'},
+    ];
+
+    // Cart management
+    let CART = JSON.parse(localStorage.getItem('umkm_cart')||'{}');
+
+    const money = (n)=> 'Rp '+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+    // DOM refs
+    const productsGrid = document.getElementById('products-grid');
+    const cartCountEl = document.getElementById('cart-count');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const cartOverlay = document.getElementById('cart-overlay');
+    const cartItemsEl = document.getElementById('cart-items');
+    const subtotalEl = document.getElementById('subtotal');
+    const totalEl = document.getElementById('total');
+    const shippingEl = document.getElementById('shipping');
+    const checkoutBtn = document.getElementById('checkout');
+
+    function renderProducts(list){
+      productsGrid.innerHTML='';
+      list.forEach(p=>{
+        const div = document.createElement('div');
+        div.className='bg-white rounded-xl overflow-hidden shadow product-card';
+        div.innerHTML = `
+          <div class="relative">
+            <img src="${p.img}" alt="${p.name}" class="w-full product-img object-cover" />
+            <div class="absolute top-2 left-2 badge px-2 py-1 rounded text-xs">${p.cat}</div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg">${p.name}</h3>
+            <p class="text-sm text-gray-500 mt-1">Stok: ${p.stock}</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="font-bold text-lg">${money(p.price)}</div>
+              <div class="flex gap-2">
+                <button class="add-to-cart flex items-center gap-2 text-white font-semibold px-3 py-2 rounded-md" data-id="${p.id}">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4"></path></svg>
+                  Beli
+                </button>
+                <a class="whatsapp-btn inline-flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md bg-green-50 text-green-700" href="https://wa.me/${p.wa}?text=Halo,%20saya%20ingin%20memesan%20${encodeURIComponent(p.name)}" target="_blank">WA</a>
+              </div>
+            </div>
+          </div>
+        `;
+        // style add-to-cart button
+        div.querySelector('.add-to-cart').style.background='linear-gradient(90deg,var(--green-600),var(--green-500))';
+        productsGrid.appendChild(div);
+      })
+
+      // attach listeners
+      document.querySelectorAll('.add-to-cart').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const id = btn.getAttribute('data-id'); addToCart(Number(id));
+        })
+      })
+    }
+
+    function addToCart(id){
+      const product = PRODUCTS.find(p=>p.id===id);
+      if(!product) return;
+      if(!CART[id]) CART[id] = {...product, qty:0};
+      if(CART[id].qty+1 > product.stock){ alert('Stok tidak cukup'); return; }
+      CART[id].qty += 1;
+      saveCart();
+      animateAdd(btn=null, product.name);
+      renderCart();
+    }
+
+    function animateAdd(btn, name){
+      // small toast
+      const t = document.createElement('div');
+      t.className='fixed right-6 bottom-6 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-60';
+      t.textContent = name + ' ditambahkan ke keranjang';
+      document.body.appendChild(t);
+      setTimeout(()=> t.remove(), 1800);
+    }
+
+    function saveCart(){ localStorage.setItem('umkm_cart', JSON.stringify(CART)); }
+
+    function renderCart(){
+      // update count
+      const count = Object.values(CART).reduce((s,i)=>s+i.qty,0);
+      cartCountEl.textContent = count;
+      // items
+      if(count===0){ cartItemsEl.innerHTML = '<p class="text-gray-500 text-center py-12">Keranjang kosong</p>'; subtotalEl.textContent = 'Rp 0'; totalEl.textContent='Rp 0'; checkoutBtn.disabled=true; return; }
+
+      cartItemsEl.innerHTML = '';
+      let subtotal = 0;
+      Object.values(CART).forEach(item=>{
+        const row = document.createElement('div');
+        row.className='flex items-center gap-3 mb-3';
+        row.innerHTML = `
+          <img src="${item.img}" class="w-16 h-12 object-cover rounded" />
+          <div class="flex-1">
+            <div class="font-semibold">${item.name}</div>
+            <div class="text-sm text-gray-500">${money(item.price)} x ${item.qty}</div>
+          </div>
+          <div class="flex flex-col items-end gap-2">
+            <div class="flex items-center gap-1">
+              <button class="qty-dec text-gray-600 px-2" data-id="${item.id}">-</button>
+              <div class="px-2">${item.qty}</div>
+              <button class="qty-inc text-gray-600 px-2" data-id="${item.id}">+</button>
+            </div>
+            <button class="text-xs text-red-500 remove-item" data-id="${item.id}">Hapus</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(row);
+        subtotal += item.price * item.qty;
+      })
+      subtotalEl.textContent = money(subtotal);
+      const shipping = 0;
+      totalEl.textContent = money(subtotal + shipping);
+      shippingEl.textContent = money(shipping);
+      checkoutBtn.disabled = false;
+
+      // qty listeners
+      document.querySelectorAll('.qty-inc').forEach(b=>b.addEventListener('click', ()=>{ changeQty(b.getAttribute('data-id'),1)}));
+      document.querySelectorAll('.qty-dec').forEach(b=>b.addEventListener('click', ()=>{ changeQty(b.getAttribute('data-id'),-1)}));
+      document.querySelectorAll('.remove-item').forEach(b=>b.addEventListener('click', ()=>{ removeItem(b.getAttribute('data-id'))}));
+    }
+
+    function changeQty(id, delta){ id=Number(id); if(!CART[id]) return; CART[id].qty += delta; if(CART[id].qty<=0) delete CART[id]; saveCart(); renderCart(); }
+    function removeItem(id){ id=Number(id); delete CART[id]; saveCart(); renderCart(); }
+
+    // UI interactions
+    document.getElementById('cart-btn').addEventListener('click', ()=>{ openCart(); });
+    document.getElementById('close-cart').addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+    function openCart(){ cartSidebar.classList.remove('translate-x-full'); cartOverlay.classList.remove('hidden'); document.body.classList.add('no-scroll'); renderCart(); }
+    function closeCart(){ cartSidebar.classList.add('translate-x-full'); cartOverlay.classList.add('hidden'); document.body.classList.remove('no-scroll'); }
+
+    // mobile menu
+    document.getElementById('mobile-menu-btn').addEventListener('click', ()=>{
+      const m = document.getElementById('mobile-menu'); m.classList.toggle('hidden');
+    });
+
+    // search
+    document.getElementById('search-btn').addEventListener('click', ()=>{ const q=document.getElementById('search').value.toLowerCase(); const filtered = PRODUCTS.filter(p=>p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)); renderProducts(filtered.length?filtered:PRODUCTS); });
+
+   // checkout simulation
+document.getElementById('checkout').addEventListener('click', ()=>{
+  const count = Object.values(CART).reduce((s,i)=>s+i.qty,0);
+  if(count===0) return alert('Keranjang kosong');
+
+  // kelompokkan produk sesuai nomor WA penjual
+  const grouped = {};
+  Object.values(CART).forEach(i=>{
+    if(!grouped[i.wa]) grouped[i.wa] = [];
+    grouped[i.wa].push(i);
+  });
+
+  // buka WA untuk tiap penjual
+  Object.entries(grouped).forEach(([wa, items])=>{
+    let msg = 'Halo, saya ingin pesan:%0A';
+    items.forEach(i=>{
+      msg += `${i.name} x ${i.qty} (Rp ${i.price})%0A`;
+    });
+    msg += `%0ATotal : Rp ${items.reduce((s,i)=>s+i.qty*i.price,0)}%0AAlamat pengiriman:`;
+    const link = `https://wa.me/${wa}?text=${msg}`;
+    window.open(link, '_blank');
+  });
+});
+
+    // initial render
+    renderProducts(PRODUCTS);
+    renderCart();
+
+    // small visibility animations
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold:0.18});
+    document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+    // load more -> scroll to grid bottom (kept simple)
+    document.getElementById('load-more').addEventListener('click', ()=>{ window.scrollTo({ top: document.getElementById('products').offsetTop, behavior:'smooth' }); });
+
+    // keep cart in sync across tabs
+    window.addEventListener('storage', ()=>{ CART = JSON.parse(localStorage.getItem('umkm_cart')||'{}'); renderCart(); });
+  </script>
+</body>
+</html>
